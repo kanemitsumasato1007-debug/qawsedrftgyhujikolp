@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>データ蓄積・学習マネージャー</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <!-- サイドバー -->
+    <nav class="sidebar">
+      <h2 class="sidebar-title">メニュー</h2>
+      <ul class="nav-list">
+        <li class="nav-item active" data-page="dashboard">ダッシュボード</li>
+        <li class="nav-item" data-page="record">案件記録</li>
+        <li class="nav-item" data-page="improvement">学習・改善記録</li>
+        <li class="nav-item nav-settings" data-page="settings">設定</li>
+      </ul>
+    </nav>
+
+    <!-- メインコンテンツ -->
+    <main class="content">
+      <!-- ダッシュボード -->
+      <div class="page active" id="page-dashboard">
+        <h1>ダッシュボード</h1>
+        <div class="dashboard-grid" id="dashboard-grid"></div>
+      </div>
+
+      <!-- 案件記録（統合） -->
+      <div class="page" id="page-record">
+        <h1>案件記録</h1>
+        <form class="form" id="form-record">
+          <!-- URL入力で案件名を自動取得 -->
+          <div class="form-group">
+            <label>案件URL（貼り付けで案件名を自動取得）</label>
+            <div class="url-input-group">
+              <input type="url" name="url" id="record-url" placeholder="https://crowdworks.jp/...">
+              <button type="button" class="btn-fetch" id="btn-fetch-title">取得</button>
+            </div>
+            <div class="fetch-status" id="fetch-status"></div>
+          </div>
+          <div class="form-group">
+            <label>案件名 <span class="required">*</span></label>
+            <input type="text" name="title" id="record-title" required>
+          </div>
+
+          <!-- 追加項目（すべて任意） -->
+          <div class="form-section-label">以下はすべて任意です</div>
+
+          <div class="form-group">
+            <label>日付</label>
+            <input type="date" name="date">
+          </div>
+          <div class="form-group">
+            <label>ステータス</label>
+            <select name="status">
+              <option value="pending">選考中</option>
+              <option value="accepted">採用</option>
+              <option value="rejected">不採用</option>
+              <option value="completed">完了</option>
+              <option value="in_progress">進行中</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>種別</label>
+            <input type="text" name="type" placeholder="例: ライティング, SEO記事, コラム...">
+          </div>
+          <div class="form-group">
+            <label>提案文</label>
+            <textarea name="proposalBody" rows="6" placeholder="提案文をここに貼り付け..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>成果物・納品内容</label>
+            <textarea name="deliverableBody" rows="6" placeholder="成果物の内容やリンクを記入..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>フィードバック・評価</label>
+            <select name="rating">
+              <option value="">未選択</option>
+              <option value="★★★★★">★★★★★</option>
+              <option value="★★★★">★★★★</option>
+              <option value="★★★">★★★</option>
+              <option value="★★">★★</option>
+              <option value="★">★</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>フィードバック内容</label>
+            <textarea name="feedbackBody" rows="4" placeholder="クライアントからのコメント..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>メモ・備考</label>
+            <textarea name="memo" rows="3" placeholder="自由にメモ..."></textarea>
+          </div>
+          <button type="submit" class="btn-save">保存</button>
+        </form>
+        <h2 style="margin-top:30px; margin-bottom:12px; color:#2c3e50;">保存済みデータ</h2>
+        <div class="data-list" id="list-record"></div>
+      </div>
+
+      <!-- 学習・改善記録 -->
+      <div class="page" id="page-improvement">
+        <h1>学習・改善記録</h1>
+        <form class="form" id="form-improvement">
+          <div class="form-group">
+            <label>テーマ <span class="required">*</span></label>
+            <input type="text" name="title" required>
+          </div>
+          <div class="form-group">
+            <label>記録日</label>
+            <input type="date" name="date">
+          </div>
+          <div class="form-group">
+            <label>カテゴリ</label>
+            <select name="improvementCategory">
+              <option value="提案文改善">提案文改善</option>
+              <option value="ライティング技術">ライティング技術</option>
+              <option value="クライアント対応">クライアント対応</option>
+              <option value="効率化">効率化</option>
+              <option value="その他">その他</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>詳細内容</label>
+            <textarea name="body" rows="6" placeholder="学んだこと、改善内容を記録..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>改善内容まとめ</label>
+            <textarea name="summary" rows="3" placeholder="簡潔にまとめ..."></textarea>
+          </div>
+          <button type="submit" class="btn-save">保存</button>
+        </form>
+        <div class="data-list" id="list-improvement"></div>
+      </div>
+      <!-- 設定 -->
+      <div class="page" id="page-settings">
+        <h1>設定</h1>
+        <div class="form">
+          <h3 style="margin-bottom:15px; color:#2c3e50;">CrowdWorks ログイン</h3>
+          <div class="login-status" id="login-status">未ログイン</div>
+          <button type="button" class="btn-save" id="btn-cw-login" style="margin-top:10px;">CrowdWorksにログイン</button>
+          <p style="font-size:12px; color:#888; margin-top:12px;">
+            ※ ボタンを押すとCrowdWorksのログイン画面が開きます。<br>
+            ※ ログインすると /proposals/ や /contracts/ のURLからも案件名を取得できます。<br>
+            ※ セッションは保持されるため、次回起動時も再ログイン不要な場合があります。
+          </p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- 詳細モーダル -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modal-title"></h2>
+        <button class="modal-close" id="modal-close">&times;</button>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+      <div class="modal-footer" id="modal-footer"></div>
+    </div>
+  </div>
+
+  <!-- 通知 -->
+  <div class="notification" id="notification"></div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>

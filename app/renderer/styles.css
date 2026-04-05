@@ -1,0 +1,515 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', 'Meiryo', sans-serif;
+  background: #f5f5f5;
+  color: #333;
+}
+
+.app {
+  display: flex;
+  height: 100vh;
+}
+
+/* サイドバー */
+.sidebar {
+  width: 220px;
+  background: #2c3e50;
+  color: #fff;
+  padding: 20px 0;
+  flex-shrink: 0;
+}
+
+.sidebar-title {
+  font-size: 18px;
+  padding: 0 20px 15px;
+  border-bottom: 1px solid #3d566e;
+  margin-bottom: 10px;
+}
+
+.nav-list {
+  list-style: none;
+}
+
+.nav-item {
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-size: 14px;
+}
+
+.nav-item:hover {
+  background: #34495e;
+}
+
+.nav-item.active {
+  background: #3498db;
+  font-weight: bold;
+}
+
+/* メインコンテンツ */
+.content {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+}
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+.page h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #2c3e50;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 8px;
+}
+
+/* フォーム */
+.form {
+  background: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-bottom: 30px;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.required {
+  color: #e74c3c;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+/* フォーム区切りラベル */
+.form-section-label {
+  font-size: 12px;
+  color: #95a5a6;
+  border-top: 1px solid #eee;
+  padding-top: 14px;
+  margin-top: 6px;
+  margin-bottom: 14px;
+}
+
+/* URL入力グループ */
+.url-input-group {
+  display: flex;
+  gap: 8px;
+}
+
+.url-input-group input {
+  flex: 1;
+}
+
+.btn-fetch {
+  background: #27ae60;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+
+.btn-fetch:hover {
+  background: #219a52;
+}
+
+.btn-fetch:disabled {
+  background: #95a5a6;
+  cursor: not-allowed;
+}
+
+.fetch-status {
+  font-size: 12px;
+  margin-top: 4px;
+  color: #888;
+}
+
+.fetch-status.loading { color: #3498db; }
+.fetch-status.success { color: #27ae60; }
+.fetch-status.error { color: #e74c3c; }
+
+.btn-save {
+  background: #3498db;
+  color: #fff;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-save:hover {
+  background: #2980b9;
+}
+
+/* データ一覧 */
+.data-list {
+  margin-top: 10px;
+}
+
+.data-list h2 {
+  font-size: 18px;
+  margin-bottom: 12px;
+  color: #2c3e50;
+}
+
+.data-card {
+  background: #fff;
+  padding: 15px 20px;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.data-card-info {
+  flex: 1;
+}
+
+.data-card-title {
+  font-weight: bold;
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+
+.data-card-meta {
+  font-size: 12px;
+  color: #888;
+}
+
+.data-card-body {
+  font-size: 13px;
+  color: #555;
+  margin-top: 6px;
+  white-space: pre-wrap;
+  max-height: 80px;
+  overflow: hidden;
+}
+
+.btn-delete {
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  margin-left: 10px;
+  flex-shrink: 0;
+}
+
+.btn-delete:hover {
+  background: #c0392b;
+}
+
+/* ダッシュボード */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.dashboard-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 20px;
+}
+
+.dashboard-card h3 {
+  font-size: 16px;
+  color: #2c3e50;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #ecf0f1;
+}
+
+.dashboard-card .count {
+  font-size: 36px;
+  font-weight: bold;
+  color: #3498db;
+}
+
+.dashboard-card .label {
+  font-size: 13px;
+  color: #888;
+  margin-top: 4px;
+}
+
+.dashboard-card .recent-item {
+  font-size: 13px;
+  padding: 6px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.dashboard-card .recent-item:last-child {
+  border-bottom: none;
+}
+
+/* 通知 */
+.notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #27ae60;
+  color: #fff;
+  padding: 14px 24px;
+  border-radius: 6px;
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.notification.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.notification.error {
+  background: #e74c3c;
+}
+
+/* モーダル */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-overlay.show {
+  display: flex;
+}
+
+.modal {
+  background: #fff;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 750px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 24px;
+  border-bottom: 1px solid #eee;
+}
+
+.modal-title {
+  font-size: 18px;
+  color: #2c3e50;
+  flex: 1;
+  margin-right: 12px;
+  word-break: break-all;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: #888;
+  line-height: 1;
+  padding: 0 4px;
+}
+
+.modal-close:hover {
+  color: #333;
+}
+
+.modal-body {
+  padding: 24px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.modal-field {
+  margin-bottom: 16px;
+}
+
+.modal-field-label {
+  font-size: 12px;
+  font-weight: bold;
+  color: #3498db;
+  margin-bottom: 4px;
+}
+
+.modal-field-value {
+  font-size: 14px;
+  color: #333;
+  white-space: pre-wrap;
+  word-break: break-all;
+  line-height: 1.6;
+}
+
+.modal-field-value a {
+  color: #3498db;
+  text-decoration: none;
+}
+
+.modal-field-value a:hover {
+  text-decoration: underline;
+}
+
+/* 編集モード */
+.modal-edit-group {
+  margin-bottom: 14px;
+}
+
+.modal-edit-group label {
+  display: block;
+  font-size: 12px;
+  font-weight: bold;
+  color: #3498db;
+  margin-bottom: 4px;
+}
+
+.modal-edit-group input,
+.modal-edit-group select,
+.modal-edit-group textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.modal-edit-group textarea {
+  resize: vertical;
+}
+
+.modal-footer {
+  padding: 14px 24px;
+  border-top: 1px solid #eee;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.btn-edit {
+  background: #f39c12;
+  color: #fff;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.btn-edit:hover {
+  background: #e67e22;
+}
+
+.btn-cancel {
+  background: #95a5a6;
+  color: #fff;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.btn-cancel:hover {
+  background: #7f8c8d;
+}
+
+/* クリック可能なリンク風 */
+.data-card-title.clickable,
+.recent-item.clickable {
+  cursor: pointer;
+  color: #3498db;
+}
+
+.data-card-title.clickable:hover,
+.recent-item.clickable:hover {
+  text-decoration: underline;
+}
+
+/* 設定画面 */
+.nav-settings {
+  margin-top: auto;
+  border-top: 1px solid #3d566e;
+}
+
+.nav-list {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 70px);
+}
+
+.login-status {
+  padding: 8px 14px;
+  border-radius: 4px;
+  font-size: 13px;
+  margin-bottom: 18px;
+  font-weight: bold;
+}
+
+.login-status.logged-in {
+  background: #d5f5e3;
+  color: #27ae60;
+}
+
+.login-status.logged-out {
+  background: #fdecea;
+  color: #e74c3c;
+}

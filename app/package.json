@@ -1,0 +1,36 @@
+{
+  "name": "data-learning-manager",
+  "version": "1.0.0",
+  "description": "データ蓄積・学習環境管理アプリ",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "build": {
+    "appId": "com.crowdworks.data-learning-manager",
+    "productName": "データ蓄積・学習マネージャー",
+    "directories": {
+      "output": "../dist"
+    },
+    "files": [
+      "**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "../履歴　学習用",
+        "to": "履歴　学習用",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "win": {
+      "target": "nsis"
+    }
+  },
+  "devDependencies": {
+    "electron": "^41.1.1",
+    "electron-builder": "^25.0.0"
+  }
+}
