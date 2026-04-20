@@ -1,0 +1,16 @@
+[theme]
+# ディープグリーン × ミニマル(薄いグリーン系背景)
+primaryColor = "#047857"
+backgroundColor = "#f7faf8"
+secondaryBackgroundColor = "#ffffff"
+textColor = "#0a0a0c"
+font = "sans-serif"
+base = "light"
+
+[server]
+headless = true
+runOnSave = true
+enableStaticServing = true
+
+[browser]
+gatherUsageStats = false
